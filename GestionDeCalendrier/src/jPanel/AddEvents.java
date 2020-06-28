@@ -32,7 +32,7 @@ import java.sql.PreparedStatement;
 import com.toedter.calendar.*;
 
 
-public class tt extends Welcome {
+public class AddEvents extends ListEvent {
 
 	private JFrame frame;
 	private JTextField textField;
@@ -46,7 +46,7 @@ public class tt extends Welcome {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					tt window = new tt();
+					AddEvents window = new AddEvents();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,7 +56,7 @@ public class tt extends Welcome {
 	}
 
 	
-	public tt() {
+	public AddEvents() {
 		initialize();
 	}
 
@@ -89,7 +89,7 @@ public class tt extends Welcome {
 		l = new JLabel(); 
 		  
         // add text to label 
-		JLabel l_1=new JLabel("Le nom de votre événement:");
+		JLabel l_1=new JLabel("Le nom de votre Ã©vÃ©nement:");
 		
 		GridBagConstraints gbc_l_1 = new GridBagConstraints();
 		gbc_l_1.insets = new Insets(0, 0, 5, 5);
@@ -107,7 +107,7 @@ public class tt extends Welcome {
 		frame.getContentPane().add(textField, gbc_textField);
 		textField.setColumns(10);
 		
-		l_2 = new JLabel("Description de l'événement");
+		l_2 = new JLabel("Description de l'Ã©vÃ©nement");
 		GridBagConstraints gbc_l_2 = new GridBagConstraints();
 		gbc_l_2.insets = new Insets(0, 0, 5, 5);
 		gbc_l_2.anchor = GridBagConstraints.EAST;
@@ -125,7 +125,7 @@ public class tt extends Welcome {
 		frame.getContentPane().add(textField_1, gbc_textField_1);
        
        
-       JButton a=new JButton("Ajouter l'évenement");
+       JButton a=new JButton("Ajouter l'Ã©venement");
        a.addMouseListener(new MouseAdapter() {
     	   
        	@Override
@@ -141,11 +141,11 @@ public class tt extends Welcome {
        gbc_a.gridy = 5;
        frame.getContentPane().add(a, gbc_a);
        
-       btnNewButton = new JButton("Afficher tout les events");
+       btnNewButton = new JButton("Afficher tout les evenements");
        btnNewButton.addActionListener(new ActionListener() {
        	public void actionPerformed(ActionEvent e) {
        		
-       		Welcome Second = new Welcome();
+       		ListEvent Second = new ListEvent();
        		Second.setVisible(true);
        	}
        });
@@ -178,7 +178,7 @@ public class tt extends Welcome {
       	             pst.executeUpdate();
       	            
       	             /* Pop Up*/
-      	            JOptionPane.showMessageDialog(null,"Evénement Bien Ajouté","Success",1);
+      	            JOptionPane.showMessageDialog(null,"EvÃ©nement Bien AjoutÃ©","Success",1);
       	         } catch (Exception e1) {
       	              System.err.println(e1.getMessage());
       	         }  }  
