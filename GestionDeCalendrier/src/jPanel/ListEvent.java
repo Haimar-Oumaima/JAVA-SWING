@@ -30,7 +30,7 @@ import javax.swing.JOptionPane;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
-public class Welcome extends JFrame {
+public class ListEvent extends JFrame {
 
 	private JFrame frameX;
 	private JTable table;
@@ -42,7 +42,7 @@ public class Welcome extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Welcome window = new Welcome();
+					ListEvent window = new ListEvent();
 					window.frameX.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,7 +54,7 @@ public class Welcome extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public Welcome() {
+	public ListEvent() {
 		initialize();
 	}
 
@@ -84,7 +84,6 @@ public class Welcome extends JFrame {
 	        Vector<Vector<Object>> matrice = new Vector<Vector<Object>>();
 	        
 	        while (rs.next()) {
-	           // Contact C=new Contact(rs.getString("CIN"),rs.getString("NOM"),rs.getString("TEL"),rs.getString("PRENOM"));
 	            Vector<Object> V= new Vector<Object>();
 	        
 	            V.add(rs.getString("nom"));
