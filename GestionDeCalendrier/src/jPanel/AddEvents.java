@@ -32,7 +32,7 @@ import java.sql.PreparedStatement;
 import com.toedter.calendar.*;
 
 
-public class AddEvents extends ListEvent {
+public class AddEvents extends ListEvents  {
 
 	private JFrame frame;
 	private JTextField textField;
@@ -40,6 +40,9 @@ public class AddEvents extends ListEvent {
 	 static JLabel l; 
 	 private JLabel l_2;
 	 private JButton btnNewButton;
+	 private JTextField textField_2;
+	 private JLabel lblId;
+	 private JButton btnAfficherLesArchives;
 	  
 
 	public static void main(String[] args) {
@@ -68,7 +71,7 @@ public class AddEvents extends ListEvent {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{89, 109, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{174, 23, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
 		
@@ -89,7 +92,7 @@ public class AddEvents extends ListEvent {
 		l = new JLabel(); 
 		  
         // add text to label 
-		JLabel l_1=new JLabel("Le nom de votre Ã©vÃ©nement:");
+		JLabel l_1=new JLabel("Le nom de votre événement:");
 		
 		GridBagConstraints gbc_l_1 = new GridBagConstraints();
 		gbc_l_1.insets = new Insets(0, 0, 5, 5);
@@ -107,7 +110,23 @@ public class AddEvents extends ListEvent {
 		frame.getContentPane().add(textField, gbc_textField);
 		textField.setColumns(10);
 		
-		l_2 = new JLabel("Description de l'Ã©vÃ©nement");
+		textField_2 = new JTextField();
+		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
+		gbc_textField_2.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_2.gridx = 3;
+		gbc_textField_2.gridy = 2;
+		frame.getContentPane().add(textField_2, gbc_textField_2);
+		textField_2.setColumns(10);
+		
+		lblId = new JLabel("ID");
+		GridBagConstraints gbc_lblId = new GridBagConstraints();
+		gbc_lblId.insets = new Insets(0, 0, 5, 5);
+		gbc_lblId.gridx = 4;
+		gbc_lblId.gridy = 2;
+		frame.getContentPane().add(lblId, gbc_lblId);
+		
+		l_2 = new JLabel("Description de l'événement");
 		GridBagConstraints gbc_l_2 = new GridBagConstraints();
 		gbc_l_2.insets = new Insets(0, 0, 5, 5);
 		gbc_l_2.anchor = GridBagConstraints.EAST;
@@ -125,7 +144,7 @@ public class AddEvents extends ListEvent {
 		frame.getContentPane().add(textField_1, gbc_textField_1);
        
        
-       JButton a=new JButton("Ajouter l'Ã©venement");
+       JButton a=new JButton("Ajouter l'évenement");
        a.addMouseListener(new MouseAdapter() {
     	   
        	@Override
@@ -141,12 +160,18 @@ public class AddEvents extends ListEvent {
        gbc_a.gridy = 5;
        frame.getContentPane().add(a, gbc_a);
        
-       btnNewButton = new JButton("Afficher tout les evenements");
+       btnNewButton = new JButton("Afficher tout les events");
        btnNewButton.addActionListener(new ActionListener() {
        	public void actionPerformed(ActionEvent e) {
        		
-       		ListEvent Second = new ListEvent();
+       		ListEvents Second = new ListEvents();
+       		Archive AR = new Archive();
+       		Second.setLocationRelativeTo(null);
+       		//Second.setExtendedState(JFrame.MAXIMIZED_BOTH);
+       		Second.pack();
        		Second.setVisible(true);
+       		
+       		
        	}
        });
        GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
@@ -154,6 +179,13 @@ public class AddEvents extends ListEvent {
        gbc_btnNewButton.gridx = 3;
        gbc_btnNewButton.gridy = 5;
        frame.getContentPane().add(btnNewButton, gbc_btnNewButton);
+       
+       btnAfficherLesArchives = new JButton("Afficher les archives");
+       GridBagConstraints gbc_btnAfficherLesArchives = new GridBagConstraints();
+       gbc_btnAfficherLesArchives.insets = new Insets(0, 0, 5, 5);
+       gbc_btnAfficherLesArchives.gridx = 3;
+       gbc_btnAfficherLesArchives.gridy = 6;
+       frame.getContentPane().add(btnAfficherLesArchives, gbc_btnAfficherLesArchives);
        
         a.addActionListener(new ActionListener(){  
       		public void actionPerformed(ActionEvent e){ 
@@ -170,15 +202,17 @@ public class AddEvents extends ListEvent {
       			
       			  //String x = calendar.getDate().toInstant().toString();
       			try {
-      	             PreparedStatement pst= Connexion.GetCon().prepareStatement("INSERT INTO events VALUES(?,?,?)");
+      	             PreparedStatement pst= Connexion.GetCon().prepareStatement("INSERT INTO events VALUES(?,?,?,?,?)"); 
       	             pst.clearParameters();
       	             pst.setString(1,textField.getText());
       	             pst.setString(2,textField_1.getText());
       	             pst.setString(3,calendar.getDate().toInstant().toString());
+      	             pst.setInt(4,0);
+      	             pst.setString(5,textField_2.getText());
       	             pst.executeUpdate();
       	            
       	             /* Pop Up*/
-      	            JOptionPane.showMessageDialog(null,"EvÃ©nement Bien AjoutÃ©","Success",1);
+      	            JOptionPane.showMessageDialog(null,"Evénement Bien Ajouté","Success",1);
       	         } catch (Exception e1) {
       	              System.err.println(e1.getMessage());
       	         }  }  
