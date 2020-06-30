@@ -12,10 +12,13 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Color;
+import javax.swing.UIManager;
 
-public class Archive {
+public class Archive extends JFrame {
 
-	private JFrame frame;
+	private JFrame frame1;
 	private JTable table;
 
 	/**
@@ -26,7 +29,7 @@ public class Archive {
 			public void run() {
 				try {
 					Archive window = new Archive();
-					window.frame.setVisible(true);
+					window.frame1.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -38,19 +41,12 @@ public class Archive {
 	 */
 	public Archive() {
 		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+	
 		table = new JTable();
+		table.setBackground(new Color(175, 238, 238));
 		
-		JButton btnAfficherLesArchives = new JButton("Afficher les archives");
+		JButton btnAfficherLesArchives = new JButton("Actualiser les archives");
+		btnAfficherLesArchives.setBackground(UIManager.getColor("Button.highlight"));
 		btnAfficherLesArchives.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -89,28 +85,41 @@ public class Archive {
 			        }
 			}
 		});
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		GroupLayout groupLayout = new GroupLayout(frame1.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addContainerGap(38, Short.MAX_VALUE)
-					.addComponent(table, GroupLayout.PREFERRED_SIZE, 365, GroupLayout.PREFERRED_SIZE)
-					.addGap(31))
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(165)
-					.addComponent(btnAfficherLesArchives)
-					.addContainerGap(180, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(91)
+							.addComponent(table, GroupLayout.PREFERRED_SIZE, 411, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(226)
+							.addComponent(btnAfficherLesArchives, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(128, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(table, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
-					.addGap(48)
-					.addComponent(btnAfficherLesArchives)
-					.addContainerGap(55, Short.MAX_VALUE))
+					.addGap(29)
+					.addComponent(table, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(btnAfficherLesArchives, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(21, Short.MAX_VALUE))
 		);
-		frame.getContentPane().setLayout(groupLayout);
+		frame1.getContentPane().setLayout(groupLayout);
 	}
+	
+	private void initialize() {
+		
+		frame1 = new JFrame();
+		frame1.setBounds(100, 100, 646, 361);
+		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		    frame1.setVisible(true);
+
+	}
+
+	
+	
 
 }

@@ -20,6 +20,10 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.ScrollPane;
+import java.awt.Color;
+import javax.swing.UIManager;
+import java.awt.Label;
 
 public class ListEvents extends JFrame {
 
@@ -27,8 +31,14 @@ public class ListEvents extends JFrame {
 	private JTable table;
 	private JTextField textField;
 	private JTextField textField_1;
+
 	private JButton btnModifier;
 	private JButton btnArchiver;
+	private JTextField textField_3;
+	/**
+	 * @wbp.nonvisual location=293,289
+	 */
+	private final Label label = new Label("New label");
 
 	/**
 	 * Launch the application.
@@ -53,7 +63,10 @@ public class ListEvents extends JFrame {
 	 */
 	public ListEvents() {
 		
+		initialize();
+		
 		table = new JTable();
+		table.setBackground(new Color(175, 238, 238));
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -62,13 +75,18 @@ public class ListEvents extends JFrame {
 				
 				String nom = table.getModel().getValueAt(ID,0).toString();
 				String desc = table.getModel().getValueAt(ID,1).toString();
+				String Date = table.getModel().getValueAt(ID,2).toString();
+				
 				
 				textField.setText(nom);
 				textField_1.setText(desc);
+				textField_3.setText(Date);
+
 			}
 		});
 		
-		JButton btnAfficher = new JButton("Afficher");
+		JButton btnAfficher = new JButton("Actualiser");
+		btnAfficher.setBackground(UIManager.getColor("Button.highlight"));
 		btnAfficher.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				 try {
@@ -114,6 +132,7 @@ public class ListEvents extends JFrame {
 		textField_1.setColumns(10);
 		
 		btnModifier = new JButton("Modifier");
+		btnModifier.setBackground(UIManager.getColor("Button.highlight"));
 		btnModifier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -139,6 +158,7 @@ public class ListEvents extends JFrame {
 		});
 		
 		btnArchiver = new JButton("Archiver");
+		btnArchiver.setBackground(UIManager.getColor("Button.highlight"));
 		btnArchiver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -151,60 +171,66 @@ public class ListEvents extends JFrame {
      	             pst.setString(1,IDD);
      	           
      	            
-     	            
+     	     
      	             pst.executeUpdate();
      	            
      	             /* Pop Up*/
-     	            JOptionPane.showMessageDialog(null,"Evénement Bien Modifiée","Success",1);
+     	            JOptionPane.showMessageDialog(null,"Evénement Bien Archivée","Archivée",1);
      	         } catch (Exception e1) {
      	              System.err.println(e1.getMessage());
      	         }
 			}
 		});
+		
+		textField_3 = new JTextField();
+		textField_3.setColumns(10);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(10)
-					.addComponent(table, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
-					.addContainerGap())
-				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(btnAfficher)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(18)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-							.addComponent(btnModifier)
-							.addGap(30))
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnArchiver)
-							.addGap(20))))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(50)
+									.addComponent(btnAfficher, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(74)
+									.addComponent(textField, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)))
+							.addGap(35)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(10)
+									.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE)
+									.addGap(37)
+									.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(btnModifier, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE)
+									.addGap(98)
+									.addComponent(btnArchiver, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE))))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(table, GroupLayout.PREFERRED_SIZE, 721, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(94, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(21)
-					.addComponent(table, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnAfficher)
-							.addContainerGap())
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnModifier))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnArchiver)
-							.addGap(1))))
+					.addComponent(table, GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textField, GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+						.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
+					.addGap(34)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnAfficher, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnArchiver, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnModifier, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
+					.addGap(32))
 		);
 		getContentPane().setLayout(groupLayout);
-		initialize();
 	}
 
 	/**

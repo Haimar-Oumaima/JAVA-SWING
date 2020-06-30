@@ -30,6 +30,13 @@ import java.awt.event.MouseEvent;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import com.toedter.calendar.*;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Color;
+import javax.swing.JSeparator;
+import javax.swing.JDesktopPane;
+import java.awt.SystemColor;
+import javax.swing.UIManager;
+import java.awt.Font;
 
 
 public class AddEvents extends ListEvents  {
@@ -66,27 +73,19 @@ public class AddEvents extends ListEvents  {
 	
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setFont(new Font("Baskerville Old Face", Font.PLAIN, 14));
+		frame.getContentPane().setBackground(new Color(175, 238, 238));
 		frame.setBounds(100, 100, 757, 427);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{89, 109, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{174, 23, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		frame.getContentPane().setLayout(gridBagLayout);
 		
 		JCalendar calendar = new JCalendar();
+		calendar.getDayChooser().getDayPanel().setForeground(SystemColor.controlLtHighlight);
+		calendar.getDayChooser().getDayPanel().setBackground(SystemColor.controlHighlight);
 		calendar.getDayChooser().getDayPanel().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 			}
 		});
-		GridBagConstraints gbc_calendar = new GridBagConstraints();
-		gbc_calendar.insets = new Insets(0, 0, 5, 5);
-		gbc_calendar.fill = GridBagConstraints.BOTH;
-		gbc_calendar.gridx = 1;
-		gbc_calendar.gridy = 0;
-		frame.getContentPane().add(calendar, gbc_calendar);
 		
 		
 		l = new JLabel(); 
@@ -94,57 +93,24 @@ public class AddEvents extends ListEvents  {
         // add text to label 
 		JLabel l_1=new JLabel("Le nom de votre événement:");
 		
-		GridBagConstraints gbc_l_1 = new GridBagConstraints();
-		gbc_l_1.insets = new Insets(0, 0, 5, 5);
-		gbc_l_1.gridx = 0;
-		gbc_l_1.gridy = 2;
-		frame.getContentPane().add(l_1, gbc_l_1);
-		
 		
 		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 2;
-		frame.getContentPane().add(textField, gbc_textField);
+		textField.setBackground(SystemColor.textHighlightText);
 		textField.setColumns(10);
 		
 		textField_2 = new JTextField();
-		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
-		gbc_textField_2.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_2.gridx = 3;
-		gbc_textField_2.gridy = 2;
-		frame.getContentPane().add(textField_2, gbc_textField_2);
 		textField_2.setColumns(10);
 		
 		lblId = new JLabel("ID");
-		GridBagConstraints gbc_lblId = new GridBagConstraints();
-		gbc_lblId.insets = new Insets(0, 0, 5, 5);
-		gbc_lblId.gridx = 4;
-		gbc_lblId.gridy = 2;
-		frame.getContentPane().add(lblId, gbc_lblId);
 		
 		l_2 = new JLabel("Description de l'événement");
-		GridBagConstraints gbc_l_2 = new GridBagConstraints();
-		gbc_l_2.insets = new Insets(0, 0, 5, 5);
-		gbc_l_2.anchor = GridBagConstraints.EAST;
-		gbc_l_2.gridx = 0;
-		gbc_l_2.gridy = 3;
-		frame.getContentPane().add(l_2, gbc_l_2);
 		
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 1;
-		gbc_textField_1.gridy = 3;
-		frame.getContentPane().add(textField_1, gbc_textField_1);
        
        
        JButton a=new JButton("Ajouter l'évenement");
+       a.setBackground(UIManager.getColor("Button.highlight"));
        a.addMouseListener(new MouseAdapter() {
     	   
        	@Override
@@ -154,38 +120,110 @@ public class AddEvents extends ListEvents  {
        	 
        	}
        });
-       GridBagConstraints gbc_a = new GridBagConstraints();
-       gbc_a.insets = new Insets(0, 0, 5, 5);
-       gbc_a.gridx = 1;
-       gbc_a.gridy = 5;
-       frame.getContentPane().add(a, gbc_a);
        
        btnNewButton = new JButton("Afficher tout les events");
+       btnNewButton.setBackground(UIManager.getColor("Button.highlight"));
        btnNewButton.addActionListener(new ActionListener() {
        	public void actionPerformed(ActionEvent e) {
        		
        		ListEvents Second = new ListEvents();
-       		Archive AR = new Archive();
        		Second.setLocationRelativeTo(null);
        		//Second.setExtendedState(JFrame.MAXIMIZED_BOTH);
        		Second.pack();
        		Second.setVisible(true);
        		
-       		
        	}
        });
-       GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-       gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
-       gbc_btnNewButton.gridx = 3;
-       gbc_btnNewButton.gridy = 5;
-       frame.getContentPane().add(btnNewButton, gbc_btnNewButton);
        
        btnAfficherLesArchives = new JButton("Afficher les archives");
-       GridBagConstraints gbc_btnAfficherLesArchives = new GridBagConstraints();
-       gbc_btnAfficherLesArchives.insets = new Insets(0, 0, 5, 5);
-       gbc_btnAfficherLesArchives.gridx = 3;
-       gbc_btnAfficherLesArchives.gridy = 6;
-       frame.getContentPane().add(btnAfficherLesArchives, gbc_btnAfficherLesArchives);
+       btnAfficherLesArchives.setBackground(UIManager.getColor("Button.highlight"));
+       btnAfficherLesArchives.addActionListener(new ActionListener()
+       {
+       	public void actionPerformed(ActionEvent e) {
+       		
+       		Archive AR = new Archive();
+       		AR.setLocationRelativeTo(null);
+       		//Second.setExtendedState(JFrame.MAXIMIZED_BOTH);
+       		AR.pack();
+       		AR.setVisible(true);       		
+       	}
+       });
+       
+       JLabel lblDateDvenement = new JLabel("Date D'\u00E9venement");
+       GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+       groupLayout.setHorizontalGroup(
+       	groupLayout.createParallelGroup(Alignment.LEADING)
+       		.addGroup(groupLayout.createSequentialGroup()
+       			.addGap(16)
+       			.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+       				.addGroup(groupLayout.createSequentialGroup()
+       					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+       						.addGroup(groupLayout.createSequentialGroup()
+       							.addComponent(l_2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+       							.addGap(10))
+       						.addComponent(l_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+       						.addComponent(lblId))
+       					.addGap(21))
+       				.addGroup(groupLayout.createSequentialGroup()
+       					.addGap(2)
+       					.addComponent(lblDateDvenement, GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+       					.addPreferredGap(ComponentPlacement.UNRELATED)))
+       			.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+       				.addComponent(textField_2, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
+       				.addComponent(textField_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+       				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+       					.addComponent(textField, GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+       					.addGap(141))
+       				.addComponent(calendar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+       			.addGap(48)
+       			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+       				.addComponent(btnAfficherLesArchives, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+       				.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE))
+       			.addGap(26))
+       		.addGroup(groupLayout.createSequentialGroup()
+       			.addGap(235)
+       			.addComponent(a, GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+       			.addGap(321))
+       );
+       groupLayout.setVerticalGroup(
+       	groupLayout.createParallelGroup(Alignment.LEADING)
+       		.addGroup(groupLayout.createSequentialGroup()
+       			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+       				.addGroup(groupLayout.createSequentialGroup()
+       					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+       						.addGroup(groupLayout.createSequentialGroup()
+       							.addGap(37)
+       							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE))
+       						.addGroup(groupLayout.createSequentialGroup()
+       							.addGap(50)
+       							.addComponent(lblDateDvenement, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)))
+       					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+       						.addGroup(groupLayout.createSequentialGroup()
+       							.addGap(64)
+       							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+       								.addComponent(lblId)
+       								.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+       							.addPreferredGap(ComponentPlacement.RELATED)
+       							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+       								.addComponent(l_1)
+       								.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+       						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+       							.addGap(18)
+       							.addComponent(btnAfficherLesArchives, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)))
+       					.addPreferredGap(ComponentPlacement.RELATED)
+       					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+       						.addGroup(groupLayout.createSequentialGroup()
+       							.addGap(18)
+       							.addComponent(l_2))
+       						.addGroup(groupLayout.createSequentialGroup()
+       							.addPreferredGap(ComponentPlacement.RELATED)
+       							.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE))))
+       				.addComponent(calendar, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE))
+       			.addPreferredGap(ComponentPlacement.RELATED)
+       			.addComponent(a, GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+       			.addGap(29))
+       );
+       frame.getContentPane().setLayout(groupLayout);
        
         a.addActionListener(new ActionListener(){  
       		public void actionPerformed(ActionEvent e){ 
@@ -222,5 +260,4 @@ public class AddEvents extends ListEvents  {
 		
 	
 	}
-
 }
